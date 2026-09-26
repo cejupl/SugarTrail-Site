@@ -694,29 +694,29 @@ section {
   font-size: 1rem;
 }
 
-/* ---------- Limits: the honest half -------------------------------------- */
-.limits {
+/* ---------- The trail ahead ---------------------------------------------- */
+.ahead {
   background: var(--surface);
   border-block: 1px solid var(--line);
 }
 
-.limits-list {
+.ahead-list {
   display: grid;
   gap: clamp(1.4rem, 2.8vw, 2.25rem);
 }
 
 @media (min-width: 52rem) {
-  .limits-list {
+  .ahead-list {
     grid-template-columns: repeat(2, 1fr);
     column-gap: clamp(2rem, 5vw, 4.5rem);
   }
 }
 
-.limits-list li {
+.ahead-list li {
   max-width: 30rem;
 }
 
-.limits-list h3 {
+.ahead-list h3 {
   font-size: 1.0625rem;
   font-weight: 700;
   padding-top: 0.9rem;
@@ -725,7 +725,7 @@ section {
   margin-bottom: 0.4rem;
 }
 
-.limits-list p {
+.ahead-list p {
   color: var(--ink-2);
   font-size: 1rem;
 }
@@ -1537,4 +1537,34 @@ section {
   left: 88%;
   background: var(--in-range);
   border-color: var(--surface);
+}
+
+/* The food memory, the card the phone leads with. */
+.s-memory .s-label {
+  display: block;
+}
+
+.s-food {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin-top: 3px;
+  color: var(--ink);
+}
+
+.s-spark {
+  width: 100%;
+  height: 38px;
+  margin: 7px 0 6px;
+  overflow: visible;
+}
+
+.s-meta {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.s-memory .s-src {
+  margin-top: 3px;
 }

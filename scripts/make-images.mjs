@@ -55,7 +55,7 @@ async function main() {
   const W = 1200, H = 630;
   const markScale = 3.4;
   const word = textPath('SugarTrail', 86, '800ExtraBold');
-  const tag = textPath('Remember less. See more.', 40, '500Medium');
+  const tag = textPath('Now you have company.', 40, '500Medium');
   const markW = MARK_W * markScale;
   const gap = 26;
   const lockW = markW + gap + (word.box.x2 - word.box.x1);
