@@ -49,6 +49,7 @@
   --trail-soft: #d7ecea;
   --sunrise: #e9a23b;
   --sunrise-soft: #fbebd0;
+  --in-range: #3d8b5f;
   --quiet: #8a847b;
   --shadow: 0 2px 12px rgb(27 25 23 / 6%);
   --shadow-lift: 0 10px 34px rgb(27 25 23 / 9%);
@@ -85,6 +86,7 @@
     --trail-soft: #123b39;
     --sunrise: #f2b75a;
     --sunrise-soft: #3a2c13;
+    --in-range: #6fc08e;
     --quiet: #7c766d;
     --shadow: 0 2px 12px rgb(0 0 0 / 34%);
     --shadow-lift: 0 10px 34px rgb(0 0 0 / 46%);
@@ -1090,4 +1092,449 @@ section {
   .spinner {
     animation-duration: 2.4s;
   }
+}
+
+/* ======================================================================
+ * The device: the app's calm state, standing in the hero.
+ *
+ * Built from the same tokens as the site, so it follows the theme the way
+ * the app does. No image, no WebGL, no library - it weighs nothing and it
+ * can never fall out of date with the palette.
+ * ==================================================================== */
+.hero-grid {
+  display: grid;
+  gap: clamp(3rem, 6vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 64rem) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+}
+
+.device-stage {
+  margin: 0;
+  perspective: 1500px;
+  display: flex;
+  justify-content: center;
+}
+
+.device-scale {
+  transform: scale(var(--device-scale, 1));
+  transform-origin: center;
+}
+
+@media (max-width: 26rem) {
+  .device-scale {
+    --device-scale: 0.82;
+  }
+}
+
+@media (min-width: 26rem) and (max-width: 64rem) {
+  .device-scale {
+    --device-scale: 0.92;
+  }
+}
+
+.device-float {
+  animation: float 7s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.device {
+  position: relative;
+  width: 320px;
+  height: 656px;
+  padding: 11px;
+  border-radius: 46px;
+  background: linear-gradient(155deg, #322e2a 0%, #16130f 42%, #23201c 100%);
+  transform-style: preserve-3d;
+  transform: rotateY(var(--ry, -15deg)) rotateX(var(--rx, 6deg)) rotateZ(-1.2deg);
+  transition: transform 450ms var(--ease);
+  box-shadow:
+    0 2px 6px rgb(27 25 23 / 10%),
+    0 10px 24px rgb(27 25 23 / 10%),
+    42px 66px 90px -34px rgb(27 25 23 / 40%),
+    inset 0 0 0 1px rgb(255 255 255 / 12%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .device {
+    box-shadow:
+      0 2px 6px rgb(0 0 0 / 40%),
+      0 10px 24px rgb(0 0 0 / 34%),
+      42px 66px 90px -34px rgb(0 0 0 / 70%),
+      inset 0 0 0 1px rgb(255 255 255 / 9%);
+  }
+}
+
+/* The island, and a single soft highlight where the light falls. */
+.device::before {
+  content: '';
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  width: 86px;
+  height: 25px;
+  border-radius: var(--pill);
+  background: #0a0908;
+  transform: translateX(-50%) translateZ(2px);
+  z-index: 3;
+}
+
+.device-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 46px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    118deg,
+    rgb(255 255 255 / 13%) 0%,
+    rgb(255 255 255 / 4%) 16%,
+    transparent 30%
+  );
+}
+
+.screen {
+  position: relative;
+  height: 100%;
+  border-radius: 36px;
+  background: var(--canvas);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: translateZ(1px);
+}
+
+/* ---- the screen's own small type scale, fixed to the device width ---- */
+.s-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 24px 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.s-signal {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.s-signal i {
+  display: block;
+  width: 3px;
+  border-radius: 1px;
+  background: var(--ink);
+}
+
+.s-signal i:nth-child(1) {
+  height: 4px;
+}
+
+.s-signal i:nth-child(2) {
+  height: 6px;
+}
+
+.s-signal i:nth-child(3) {
+  height: 8px;
+}
+
+.s-signal i:nth-child(4) {
+  height: 10px;
+  opacity: 0.35;
+}
+
+.s-battery {
+  width: 22px;
+  height: 11px;
+  border: 1.4px solid var(--ink);
+  border-radius: 3px;
+  padding: 1.4px;
+  opacity: 0.85;
+}
+
+.s-battery span {
+  display: block;
+  width: 72%;
+  height: 100%;
+  border-radius: 1px;
+  background: var(--ink);
+}
+
+.s-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 18px 20px 14px;
+}
+
+.s-greet {
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+
+.s-date {
+  font-size: 11.5px;
+  color: var(--ink-2);
+  margin-top: 2px;
+}
+
+.s-head svg {
+  width: 34px;
+  flex: none;
+}
+
+.s-card {
+  margin: 0 20px 10px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 1px 6px rgb(27 25 23 / 4%);
+}
+
+.s-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.s-label {
+  font-size: 11px;
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+.s-pill {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--pill);
+  background: color-mix(in srgb, var(--in-range, #3d8b5f) 16%, transparent);
+  color: var(--in-range, #3d8b5f);
+}
+
+.s-value {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  margin-top: 6px;
+}
+
+.s-num {
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.s-unit {
+  font-size: 12px;
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+.s-trend {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--ink-2);
+}
+
+.s-trend svg {
+  width: 12px;
+  height: 12px;
+}
+
+.s-src {
+  font-size: 10.5px;
+  color: var(--ink-2);
+  margin-top: 8px;
+}
+
+.s-calm {
+  background: var(--trail-soft);
+  border-color: transparent;
+}
+
+.s-calm svg {
+  width: 100%;
+  height: 34px;
+  margin-bottom: 8px;
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.s-calm-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.s-calm .s-src {
+  margin-top: 5px;
+}
+
+.s-strip {
+  margin: 4px 20px 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+
+.s-strip-line {
+  position: relative;
+  height: 18px;
+}
+
+.s-strip-line::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 8px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--line);
+}
+
+.s-strip-line b {
+  position: absolute;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--canvas);
+}
+
+.s-tabs {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 10px 12px 20px;
+  border-top: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.s-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--quiet);
+  width: 46px;
+}
+
+.s-tab svg {
+  width: 18px;
+  height: 18px;
+}
+
+.s-tab.on {
+  color: var(--trail);
+}
+
+.s-log {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--trail);
+  color: var(--canvas);
+  display: grid;
+  place-items: center;
+  margin-top: -18px;
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--trail) 38%, transparent);
+}
+
+.s-log svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* A card lifts a little when pointed at: the only depth outside the hero. */
+@media (hover: hover) and (pointer: fine) {
+  .card {
+    transition:
+      transform 260ms var(--ease),
+      box-shadow 260ms var(--ease);
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .device-float,
+  .s-calm svg {
+    animation: none;
+  }
+
+  .device {
+    transition: none;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}
+
+/* The day's moments on the strip: placed by class so no inline style is needed. */
+.s-strip-line b.d1 {
+  left: 4%;
+  background: var(--in-range);
+  border-color: var(--surface);
+}
+
+.s-strip-line b.d2 {
+  left: 26%;
+  background: var(--sunrise);
+  border-color: var(--surface);
+}
+
+.s-strip-line b.d3 {
+  left: 47%;
+  background: var(--in-range);
+  border-color: var(--surface);
+}
+
+.s-strip-line b.d4 {
+  left: 68%;
+  background: var(--trail);
+  border-color: var(--surface);
+}
+
+.s-strip-line b.d5 {
+  left: 88%;
+  background: var(--in-range);
+  border-color: var(--surface);
 }
