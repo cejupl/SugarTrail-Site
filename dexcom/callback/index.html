@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Connecting Dexcom - SugarTrail</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="theme-color" content="#FAF7F2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#141210" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href="/assets/img/favicon.png" sizes="any" />
+    <link rel="icon" href="/assets/img/mark.svg" type="image/svg+xml" />
+    <link rel="preload" href="/assets/fonts/manrope-500.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script src="/assets/boot.js"></script>
+  </head>
+
+  <body>
+    <main id="main" class="center-page">
+      <div class="shell">
+        <div class="inner">
+          <svg class="hero-mark" viewBox="0 0 48 32" role="img" aria-label="SugarTrail">
+            <path d="M4 26 C 12 26, 13 8, 21 8 C 29 8, 30 24, 38 20" fill="none" stroke="var(--trail)" stroke-width="4.5" stroke-linecap="round" />
+            <circle cx="42" cy="13" r="4.5" fill="var(--sunrise)" />
+          </svg>
+
+          <section id="working" hidden aria-live="polite">
+            <div class="spinner" aria-hidden="true"></div>
+            <h1 class="heading">Taking you back to SugarTrail</h1>
+            <p class="lead">
+              Your Dexcom account has been authorised. The app is finishing the connection
+              now; your first readings arrive shortly after.
+            </p>
+            <div class="hero-actions">
+              <a class="btn" id="open-app" href="sugartrail://dexcom/callback">Open SugarTrail</a>
+            </div>
+          </section>
+
+          <section id="denied" hidden aria-live="polite">
+            <h1 class="heading">Dexcom did not connect</h1>
+            <p class="lead" id="denied-detail">
+              Nothing was connected, and nothing changed. You can try again from the app
+              whenever you like.
+            </p>
+            <div class="hero-actions">
+              <a class="btn" href="sugartrail://">Open SugarTrail</a>
+              <a class="btn-quiet" href="/">Back to sugartrail.app</a>
+            </div>
+          </section>
+
+          <section id="idle">
+            <h1 class="heading">Nothing to do here</h1>
+            <p class="lead">
+              This is the page Dexcom returns you to after you approve a connection in the
+              SugarTrail app. On its own it does nothing at all.
+            </p>
+            <div class="hero-actions">
+              <a class="btn-quiet" href="/">Back to sugartrail.app</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <script src="/assets/callback.js" defer></script>
+  </body>
+</html>

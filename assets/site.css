@@ -1,0 +1,1093 @@
+/*
+ * SugarTrail - sugartrail.app
+ *
+ * The design system of the app, on the web: docs/DESIGN.md in the app repo
+ * is the source. Two working colours, one type family, motion that means
+ * something, no decoration. The craft shows in what is left out.
+ */
+
+/* ---------- Manrope, self-hosted. No third-party request from this site. --- */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('fonts/manrope-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('fonts/manrope-600.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('fonts/manrope-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('fonts/manrope-800.woff2') format('woff2');
+}
+
+/* ---------- Tokens ------------------------------------------------------- */
+:root {
+  color-scheme: light dark;
+
+  --canvas: #faf7f2;
+  --surface: #ffffff;
+  --ink: #1b1917;
+  --ink-2: #5c5750;
+  --line: #e7e1d8;
+  --trail: #0e6b66;
+  --trail-soft: #d7ecea;
+  --sunrise: #e9a23b;
+  --sunrise-soft: #fbebd0;
+  --quiet: #8a847b;
+  --shadow: 0 2px 12px rgb(27 25 23 / 6%);
+  --shadow-lift: 0 10px 34px rgb(27 25 23 / 9%);
+  --ring: rgb(14 107 102 / 35%);
+
+  --radius-sm: 8px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --pill: 999px;
+
+  --measure: 34rem;
+  --wide: 68rem;
+  --section: clamp(4.5rem, 9vw, 8.5rem);
+
+  --t-display: clamp(2.85rem, 1.1rem + 6.1vw, 5.5rem);
+  --t-title: clamp(1.9rem, 1.15rem + 2.6vw, 3rem);
+  --t-heading: clamp(1.25rem, 1.06rem + 0.6vw, 1.5rem);
+  --t-lead: clamp(1.125rem, 1.03rem + 0.4vw, 1.3125rem);
+  --t-body: clamp(1.0625rem, 1.01rem + 0.25vw, 1.1875rem);
+  --t-callout: 0.9375rem;
+  --t-caption: 0.8125rem;
+
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: #141210;
+    --surface: #1e1b18;
+    --ink: #f3efe8;
+    --ink-2: #a9a297;
+    --line: #2e2a26;
+    --trail: #5cc4be;
+    --trail-soft: #123b39;
+    --sunrise: #f2b75a;
+    --sunrise-soft: #3a2c13;
+    --quiet: #7c766d;
+    --shadow: 0 2px 12px rgb(0 0 0 / 34%);
+    --shadow-lift: 0 10px 34px rgb(0 0 0 / 46%);
+    --ring: rgb(92 196 190 / 45%);
+  }
+}
+
+/* ---------- Base --------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--ink);
+  font-family: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: var(--t-body);
+  font-weight: 500;
+  line-height: 1.6;
+  font-synthesis: none; /* Manrope has no italic; never let the browser fake one */
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--trail);
+  text-decoration-color: color-mix(in srgb, var(--trail) 34%, transparent);
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 180ms var(--ease);
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid var(--trail);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--trail-soft);
+  color: var(--ink);
+}
+
+:target {
+  scroll-margin-top: 6rem;
+}
+
+/* ---------- Type helpers ------------------------------------------------- */
+.display {
+  font-size: var(--t-display);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+.title {
+  font-size: var(--t-title);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+
+.heading {
+  font-size: var(--t-heading);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+}
+
+.lead {
+  font-size: var(--t-lead);
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+
+.eyebrow {
+  display: block;
+  font-size: var(--t-caption);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--trail);
+}
+
+.caption {
+  font-size: var(--t-caption);
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
+.quiet {
+  color: var(--quiet);
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  z-index: 100;
+}
+
+.skip:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+/* ---------- Layout ------------------------------------------------------- */
+.shell {
+  width: min(100% - 2.5rem, var(--wide));
+  margin-inline: auto;
+}
+
+@media (min-width: 40rem) {
+  .shell {
+    width: min(100% - 5rem, var(--wide));
+  }
+}
+
+section {
+  padding-block: var(--section);
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+
+/* ---------- Header ------------------------------------------------------- */
+.site-head {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding-block: 1.125rem;
+  background: color-mix(in srgb, var(--canvas) 86%, transparent);
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 220ms var(--ease);
+}
+
+.site-head[data-scrolled='true'] {
+  border-bottom-color: var(--line);
+}
+
+.site-head .shell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: -0.02em;
+}
+
+.wordmark svg {
+  width: 38px;
+  height: auto;
+}
+
+.head-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: var(--t-callout);
+  font-weight: 600;
+}
+
+.head-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.head-links a:hover {
+  color: var(--ink);
+}
+
+@media (max-width: 36rem) {
+  .head-links .on-wide {
+    display: none;
+  }
+}
+
+/* ---------- The rail: the trail, tracing your scroll --------------------- */
+.rail {
+  position: fixed;
+  left: 2.25rem;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+  z-index: 10;
+  pointer-events: none;
+  display: none;
+}
+
+.rail span {
+  position: absolute;
+  inset-inline: -0.5px;
+  top: 0;
+  height: var(--progress, 0%);
+  background: var(--trail);
+  transform-origin: top;
+}
+
+.rail span::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--sunrise);
+  transform: translate(-50%, 50%);
+}
+
+@media (min-width: 78rem) {
+  .rail {
+    display: block;
+  }
+}
+
+/* ---------- Hero --------------------------------------------------------- */
+.hero {
+  padding-top: clamp(3rem, 7vw, 6rem);
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.hero-mark {
+  width: clamp(88px, 11vw, 132px);
+  height: auto;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+.hero h1 {
+  margin-block: 0.5rem 1.5rem;
+  max-width: 16ch;
+}
+
+.hero h1 .line {
+  display: block;
+}
+
+.hero .lead {
+  max-width: 37rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin-top: 2.25rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.6rem;
+  border-radius: var(--pill);
+  background: var(--trail-soft);
+  color: var(--trail);
+  font-size: var(--t-caption);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sunrise);
+}
+
+/* ---------- Buttons ------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0 1.4rem;
+  border-radius: var(--pill);
+  background: var(--trail);
+  color: var(--canvas);
+  font-weight: 700;
+  font-size: var(--t-callout);
+  text-decoration: none;
+  border: 1px solid transparent;
+  box-shadow: var(--shadow);
+  transition:
+    transform 180ms var(--ease),
+    box-shadow 180ms var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lift);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 48px;
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: var(--t-callout);
+  text-decoration: none;
+}
+
+.btn-quiet:hover {
+  color: var(--ink);
+}
+
+.btn-quiet svg {
+  width: 15px;
+  height: 15px;
+  transition: transform 200ms var(--ease);
+}
+
+.btn-quiet:hover svg {
+  transform: translateX(3px);
+}
+
+/* ---------- Section headers --------------------------------------------- */
+.sec-head {
+  max-width: 44rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.sec-head .title {
+  margin-top: 0.75rem;
+}
+
+.sec-head .lead {
+  margin-top: 1.125rem;
+  max-width: var(--measure);
+}
+
+/* ---------- The difficulties: an editorial list -------------------------- */
+.burdens {
+  border-top: 1px solid var(--line);
+}
+
+.burdens li {
+  display: grid;
+  grid-template-columns: 3.25rem 1fr;
+  gap: 0 1rem;
+  padding-block: clamp(1.4rem, 2.6vw, 2rem);
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+
+.burdens .num {
+  font-size: var(--t-caption);
+  font-weight: 700;
+  color: var(--trail);
+  letter-spacing: 0.08em;
+  padding-top: 0.42em;
+}
+
+.burdens .body {
+  max-width: 42rem;
+}
+
+.burdens b {
+  font-weight: 700;
+}
+
+.burdens .body span {
+  color: var(--ink-2);
+}
+
+.burdens-note {
+  margin-top: 1.75rem;
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+@media (min-width: 48rem) {
+  .burdens li {
+    grid-template-columns: 5rem 1fr;
+  }
+}
+
+/* ---------- Cards -------------------------------------------------------- */
+.cards {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 46rem) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards.span-first > li:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(1.25rem, 2.4vw, 1.75rem);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.well {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--trail-soft);
+  color: var(--trail);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.well svg {
+  width: 20px;
+  height: 20px;
+}
+
+.card h3 {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.card p {
+  color: var(--ink-2);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ---------- The journey: nodes on the trail ------------------------------ */
+.journey {
+  position: relative;
+  padding-left: 2.25rem;
+}
+
+.journey::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0.65rem;
+  bottom: 0.65rem;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--trail) 0%,
+    var(--trail) 72%,
+    var(--sunrise) 100%
+  );
+  opacity: 0.85;
+}
+
+.journey li {
+  position: relative;
+  padding-block: 0 clamp(1.75rem, 3.4vw, 2.5rem);
+  max-width: 40rem;
+}
+
+.journey li:last-child {
+  padding-bottom: 0;
+}
+
+.journey li::before {
+  content: '';
+  position: absolute;
+  left: -2.25rem;
+  top: 0.5rem;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--canvas);
+  border: 3px solid var(--trail);
+}
+
+.journey li:last-child::before {
+  border-color: var(--sunrise);
+  background: var(--sunrise);
+}
+
+.journey h3 {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.journey p {
+  color: var(--ink-2);
+  font-size: 1rem;
+}
+
+/* ---------- Promises ----------------------------------------------------- */
+.promises {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+@media (min-width: 46rem) {
+  .promises {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.promises li {
+  background: var(--surface);
+  padding: clamp(1.4rem, 2.6vw, 2rem);
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.promises h3 {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.promises p {
+  color: var(--ink-2);
+  font-size: 1rem;
+}
+
+/* ---------- Limits: the honest half -------------------------------------- */
+.limits {
+  background: var(--surface);
+  border-block: 1px solid var(--line);
+}
+
+.limits-list {
+  display: grid;
+  gap: clamp(1.4rem, 2.8vw, 2.25rem);
+}
+
+@media (min-width: 52rem) {
+  .limits-list {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: clamp(2rem, 5vw, 4.5rem);
+  }
+}
+
+.limits-list li {
+  max-width: 30rem;
+}
+
+.limits-list h3 {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  padding-top: 0.9rem;
+  border-top: 2px solid var(--trail);
+  display: inline-block;
+  margin-bottom: 0.4rem;
+}
+
+.limits-list p {
+  color: var(--ink-2);
+  font-size: 1rem;
+}
+
+/* ---------- Closing ------------------------------------------------------ */
+.closing {
+  text-align: center;
+}
+
+.closing .title {
+  margin-inline: auto;
+  max-width: 18ch;
+}
+
+.closing .lead {
+  margin: 1.25rem auto 0;
+  max-width: 34rem;
+}
+
+.closing .hero-actions {
+  justify-content: center;
+}
+
+/* ---------- Footer ------------------------------------------------------- */
+.site-foot {
+  border-top: 1px solid var(--line);
+  padding-block: clamp(2.5rem, 5vw, 4rem) 3rem;
+  font-size: var(--t-callout);
+}
+
+.foot-grid {
+  display: grid;
+  gap: 2.25rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 46rem) {
+  .foot-grid {
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.foot-grid h2 {
+  font-size: var(--t-caption);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--quiet);
+  margin-bottom: 0.9rem;
+}
+
+.foot-grid ul {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.foot-grid a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--ink-2);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.foot-grid a:hover {
+  color: var(--ink);
+}
+
+.foot-note {
+  margin-top: 2.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  justify-content: space-between;
+  color: var(--quiet);
+  font-size: var(--t-caption);
+}
+
+.foot-note p {
+  max-width: 46rem;
+}
+
+/* ---------- Prose: the legal pages --------------------------------------- */
+.prose {
+  max-width: 40rem;
+}
+
+.prose h2 {
+  font-size: var(--t-heading);
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  margin-top: 2.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h3 {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  margin-top: 1.75rem;
+  margin-bottom: 0.4rem;
+}
+
+.prose p,
+.prose li {
+  color: var(--ink-2);
+  margin-bottom: 0.9rem;
+}
+
+.prose strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.prose ul {
+  list-style: none;
+  margin-bottom: 1.25rem;
+}
+
+.prose ul li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.prose ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.68em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--trail);
+}
+
+.prose .callout {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--trail);
+  border-radius: var(--radius-sm);
+  padding: 1.125rem 1.25rem;
+  margin-block: 1.5rem;
+}
+
+.prose .callout p:last-child {
+  margin-bottom: 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-block: 1.25rem 1.75rem;
+  font-size: 0.9375rem;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--line);
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+  color: var(--ink-2);
+}
+
+.prose th {
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: var(--t-caption);
+  letter-spacing: 0.02em;
+}
+
+.page-head {
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.page-head .title {
+  margin-top: 0.6rem;
+}
+
+.page-head .caption {
+  margin-top: 0.75rem;
+}
+
+/* ---------- Motion ------------------------------------------------------- */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.js .reveal.in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 700ms var(--ease),
+    transform 700ms var(--ease);
+  transition-delay: var(--delay, 0ms);
+}
+
+.draw path {
+  stroke-dasharray: var(--len, 120);
+  stroke-dashoffset: var(--len, 120);
+  animation: draw 1400ms var(--ease) 180ms forwards;
+}
+
+.draw circle {
+  opacity: 0;
+  animation:
+    dot 520ms var(--ease) 1180ms forwards,
+    breathe 4s ease-in-out 1800ms infinite;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dot {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.68;
+  }
+}
+
+.draw circle {
+  transform-origin: 42px 13px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .draw path {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+
+  .draw circle {
+    opacity: 1;
+    animation: none;
+  }
+
+  .btn:hover,
+  .btn-quiet:hover svg {
+    transform: none;
+  }
+}
+
+/* ---------- Print: the legal pages are printed and filed ----------------- */
+@media print {
+  .site-head,
+  .rail,
+  .site-foot,
+  .skip {
+    display: none;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+
+  .prose {
+    max-width: none;
+  }
+
+  .prose p,
+  .prose li,
+  .prose td {
+    color: #222;
+  }
+
+  a {
+    color: #000;
+  }
+}
+
+/* ---------- Utilities (kept as classes: the CSP forbids inline styles) --- */
+.foot-tag {
+  margin-top: 0.9rem;
+  max-width: 24rem;
+}
+
+.page-body {
+  padding-bottom: var(--section);
+}
+
+/* ---------- The small pages: callback, 404 ------------------------------- */
+.center-page {
+  min-height: 72vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-block: var(--section);
+}
+
+.center-page .inner {
+  max-width: 30rem;
+}
+
+.center-page .hero-mark {
+  margin-inline: auto;
+}
+
+.center-page .lead {
+  margin-top: 1rem;
+}
+
+.center-page .hero-actions {
+  justify-content: center;
+  margin-top: 1.75rem;
+}
+
+.spinner {
+  width: 22px;
+  height: 22px;
+  margin: 0 auto 1.25rem;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  border-top-color: var(--trail);
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 2.4s;
+  }
+}
